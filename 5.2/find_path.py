@@ -59,9 +59,10 @@ def solution(nodeinfo):
     for i in range(len(nodeinfo)):
         nodeinfo[i].append(i + 1)
     nodeinfo = sorted(nodeinfo, key=lambda x: -x[1])
+    print(nodeinfo)
     answer = []
     tree = NodeManage(Node(nodeinfo[0][0], nodeinfo[0][-1]))
-    for i in nodeinfo[1:]:
+    for i in nodeinfo[1:len(nodeinfo)]:
         tree.insert(i[0], i[-1])
     answer.append(tree.preorder())
     answer.append(tree.postorder())
@@ -70,5 +71,6 @@ def solution(nodeinfo):
 
 test_case = [[5, 3], [11, 5], [13, 3], [3, 5], [6, 1], [1, 3], [8, 6], [7, 2],
              [2, 2]]
+print(sorted(test_case, key=lambda x: -x[1]))
 
 print(solution(test_case))

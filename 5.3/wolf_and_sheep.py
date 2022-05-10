@@ -1,11 +1,10 @@
-import sys
-
-sys.setrecursionlimit(10**6)
+import copy
 
 
 def get_com(can_go, info, ans_lists):
     return_list = []
     while ans_lists:
+        input()
         ans_list = ans_lists.pop()
         for i in range(len(ans_list)):
             node = ans_list[i]
@@ -18,8 +17,8 @@ def get_com(can_go, info, ans_lists):
                 for i in temp:
                     if len(i) > 0:
                         return_list.append(i)
-                temp = return_list
-                for i in temp:
+                remove_list = []
+                for i in return_list:
                     count = 1
                     for j in range(1, len(i)):
                         if info[i[j]] == 0:
@@ -27,12 +26,14 @@ def get_com(can_go, info, ans_lists):
                         else:
                             count -= 1
                         if count < 1:
-                            print(i)
-                            return_list.remove(i)
-                            break
+                            remove_list.append(i)
+                    print("i:", i)
+                    print("COUNT:", count > info.count(1))
+
             except:
                 pass
-
+        for remove_item in remove_list:
+            return_list.remove(remove_item)
     return return_list
 
 
@@ -46,6 +47,8 @@ def count_sheep(info, key_list):
 
 def solution(info, edges):
     edge_dict = {}
+    if info.count(1) < 2:
+        return info.count(0)
     cnt_list = [1]
     for i in range(len(info) - 1):
         edge_dict[edges[i][0]] = []
@@ -71,6 +74,6 @@ def solution(info, edges):
 
 test_edges = [[0, 1], [1, 2], [1, 4], [0, 8], [8, 7], [9, 10], [9, 11], [4, 3],
               [6, 5], [4, 6], [8, 9]]
-test_info = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+test_info = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
 
-solution(test_info, test_edges)
+print(solution(test_info, test_edges))
